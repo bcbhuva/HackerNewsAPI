@@ -27,7 +27,7 @@
             {
                 var story = await _repository.GetStoryByIdAsync(id, cancellationToken);
 
-                if(story.Type.ToLower() == "story" && story.Url != null)
+                if (story != null && story.Type.ToLower() == "story" && story.Url != null)
                     stories.Add(story);
             }
             return stories.Take(200);

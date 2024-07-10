@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{256E45C6-B6A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{58F2DD40-83C4-46E6-A2F3-AFA319887BFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackerNewsAPI.test", "HackerNewsAPI.test\HackerNewsAPI.test.csproj", "{33B043E8-7866-4923-B96B-CDBCD61CE5F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HackerNewsAPI.test", "HackerNewsAPI.test\HackerNewsAPI.test.csproj", "{33B043E8-7866-4923-B96B-CDBCD61CE5F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
