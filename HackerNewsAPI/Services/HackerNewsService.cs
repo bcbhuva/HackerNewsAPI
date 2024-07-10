@@ -23,7 +23,7 @@
             var storyIds = await _repository.GetStoryIdsAsync(cancellationToken);
 
             var stories = new List<Story>();
-            foreach (var id in storyIds.Take(220))
+            foreach (var id in storyIds)
             {
                 var story = await _repository.GetStoryByIdAsync(id, cancellationToken);
 
