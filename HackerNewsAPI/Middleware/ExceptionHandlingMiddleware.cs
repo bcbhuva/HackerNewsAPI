@@ -1,6 +1,4 @@
-﻿using HackerNewsAPI.Model.Response;
-using Newtonsoft.Json;
-using System.Net;
+﻿using System.Net;
 
 namespace HackerNewsAPI.Middleware
 {
@@ -12,7 +10,6 @@ namespace HackerNewsAPI.Middleware
         {
             _next = next;
         }
-
         public async Task InvokeAsync(HttpContext httpContext)
         {
             try
@@ -21,30 +18,23 @@ namespace HackerNewsAPI.Middleware
             }
             catch (Exception ex)
             {
-                await HandleExceptionAsync(httpContext, 0, ex.Message);
+                await HandleExceptionAsync(httpContext, ex);
             }
         }
 
-        private async Task HandleExceptionAsync(HttpContext context, int errorCode, string errorMessage)
+        public static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
-            var response = context.Response;
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            var errorResponse = new ErrorResponse();
-            if (errorCode != 0)
+            var result = new
             {
-                response.StatusCode = (int)HttpStatusCode.BadRequest;
-                errorResponse.ErrorCode = errorCode;
-                errorResponse.ErrorMessage = errorMessage;
-            }
-            else
-            {
-                response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                errorResponse.ErrorMessage = "Internal server error!";
-            }
+                StatusCode = context.Response.StatusCode,
+                Message = "An internal server error occurred. Please try again later.",
+                Detailed = exception.Message
+            };
 
-            var result = JsonConvert.SerializeObject(errorResponse);
-            await context.Response.WriteAsync(result);
+            return context.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(result));
         }
     }
 }

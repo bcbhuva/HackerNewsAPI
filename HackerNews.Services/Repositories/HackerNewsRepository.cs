@@ -1,8 +1,8 @@
-﻿namespace HackerNewsAPI.Repositories
+﻿namespace HackerNews.Services.Repositories
 {
     using Constant;
-    using Interfaces;
-    using Model.Response;
+    using HackerNews.Services.Interfaces;
+    using HackerNews.Services.Model.Response;
     using Newtonsoft.Json;
     using System.Threading;
 

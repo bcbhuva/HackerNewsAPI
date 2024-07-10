@@ -1,6 +1,6 @@
-﻿using HackerNewsAPI.Interfaces;
-using HackerNewsAPI.Repositories;
-using HackerNewsAPI.Services;
+﻿using HackerNews.Services.Interfaces;
+using HackerNews.Services.Repositories;
+using HackerNews.Services.Services;
 
 namespace HackerNewsAPI.Ioc
 {

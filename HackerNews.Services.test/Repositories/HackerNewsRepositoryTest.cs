@@ -1,18 +1,19 @@
-﻿using HackerNewsAPI.Model.Response;
+﻿using HackerNews.Services.Model.Response;
+using HackerNews.Services.Repositories;
 using Moq;
 using Moq.Protected;
 using Newtonsoft.Json;
 using System.Net;
 
-namespace HackerNewsAPI.Repositories.test
+namespace HackerNews.Services.test.Repositories
 {
-    public class HackerNewsRepositoryTests
+    public class HackerNewsRepositoryTest
     {
         private readonly Mock<HttpMessageHandler> _httpMessageHandlerMock;
         private readonly HttpClient _httpClient;
         private readonly HackerNewsRepository _hackerNewsRepository;
 
-        public HackerNewsRepositoryTests()
+        public HackerNewsRepositoryTest()
         {
             _httpMessageHandlerMock = new Mock<HttpMessageHandler>();
             _httpClient = new HttpClient(_httpMessageHandlerMock.Object)
@@ -80,7 +81,7 @@ namespace HackerNewsAPI.Repositories.test
                 Id = storyId,
                 Title = "Test Story",
                 Url = "http://teststory.com",
-                Type ="story"
+                Type = "story"
             };
             var responseContent = JsonConvert.SerializeObject(story);
             var responseMessage = new HttpResponseMessage(HttpStatusCode.OK)

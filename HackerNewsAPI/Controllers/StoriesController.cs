@@ -1,22 +1,16 @@
-﻿using HackerNewsAPI.Constant;
-using HackerNewsAPI.Interfaces;
-using HackerNewsAPI.Model.Response;
+﻿using HackerNews.Services.Interfaces;
+using HackerNews.Services.Model.Response;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace HackerNewsAPI.Controllers
 {
     public class StoriesController : BaseController
     {
         private readonly IHackerNewsService _hackerNewsService;
-        private IMemoryCache _cache;
-        private IConfiguration _configuration;
 
-        public StoriesController(IHackerNewsService hackerNewsService, IMemoryCache cache, IConfiguration configuration)
+        public StoriesController(IHackerNewsService hackerNewsService)
         {
             _hackerNewsService = hackerNewsService;
-            _cache = cache ?? throw new ArgumentNullException(nameof(cache));
-            _configuration = configuration ?? throw new ArgumentNullException();
         }
 
         /// <summary>
@@ -30,20 +24,11 @@ namespace HackerNewsAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(CancellationToken cancellationToken)
         {
-            if (!_cache.TryGetValue(ApplicationConstant.storiesCacheKey, out IEnumerable<Story> stories))
+            var stories = await _hackerNewsService.GetStoriesAsync(cancellationToken);
+
+            if (stories == null)
             {
-                //stories not found in cache. Fetching from database or external service.
-                stories = await _hackerNewsService.GetStoriesAsync(cancellationToken);
-
-                Double CachingDuration = Convert.ToDouble(_configuration.GetValue<string>("CachingDuration"));
-
-                var cacheEntryOptions = new MemoryCacheEntryOptions()
-                        .SetSlidingExpiration(TimeSpan.FromMinutes(CachingDuration))
-                        .SetAbsoluteExpiration(TimeSpan.FromMinutes(CachingDuration))
-                        .SetPriority(CacheItemPriority.Normal)
-                        .SetSize(1024);
-                _cache.Set(ApplicationConstant.storiesCacheKey, stories, cacheEntryOptions);
-
+                return NoContent();
             }
 
             return Ok(stories);

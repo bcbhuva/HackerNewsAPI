@@ -1,6 +1,6 @@
-﻿namespace HackerNewsAPI.Interfaces
+﻿namespace HackerNews.Services.Interfaces
 {
-    using HackerNewsAPI.Model.Response;
+    using Model.Response;
 
     public interface IHackerNewsService
     {

@@ -1,4 +1,4 @@
-﻿namespace HackerNewsAPI.Model.Response
+﻿namespace HackerNews.Services.Model.Response
 {
     public class Story
     {

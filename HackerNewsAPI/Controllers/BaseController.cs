@@ -6,6 +6,6 @@ namespace HackerNewsAPI.Controllers;
 [Route("api/[controller]")]
 public abstract class BaseController : ControllerBase
 {
-    protected ActionResult<TResult> OkOrNotFound<TResult>(TResult result)
+    public ActionResult<TResult> OkOrNotFound<TResult>(TResult result)
         => result is null ? NotFound() : Ok(result);
 }
